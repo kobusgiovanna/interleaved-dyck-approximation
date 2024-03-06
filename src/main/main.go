@@ -64,15 +64,10 @@ func main() {
 		_, _, g = parseDyckComponent(g)
 
 
-		fmt.Println("before underapprox", g.ShortDescription())
-
-
 		//underapproximation through D(\Sigma_{\alpha}\cup\Sigma_{\beta})
 		reachablePaths := getUnderApprox(g)
 		outputWord = "Underapproximation: " + strconv.Itoa(len(reachablePaths))
 		outputFile.Write([]byte(outputWord + "\n"))
-
-		fmt.Println("after underapprox", g.ShortDescription())
 
 		clearMaps()
 		curr_grammar = "classic"
@@ -87,7 +82,7 @@ func main() {
 		clearMaps()
 		curr_grammar = "augmented"
 		augmentedMRPaths := getMROverApprox(g, reachablePaths)
-		outputWord = "Mutual refinement with refined grammar: " + strconv.Itoa(len(augmentedMRPaths))
+		outputWord = "Stronger Grammar: " + strconv.Itoa(len(augmentedMRPaths))
 		outputFile.Write([]byte(outputWord + "\n"))
 
 		//reduce graph further
@@ -96,7 +91,7 @@ func main() {
 
 		filteredOverPaths := getOnDemandMR(g, reachablePaths, augmentedMRPaths, fileInfo.Name())
 
-		outputWord = "Mutual refinement on demand with refined grammar: " + strconv.Itoa(len(filteredOverPaths))
+		outputWord = "On-Demand: " + strconv.Itoa(len(filteredOverPaths))
 		outputFile.Write([]byte(outputWord + "\n"))
 
 	}
