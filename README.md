@@ -5,7 +5,7 @@
 This repository contains an implementation of the algorithms described in "A Better Approximation for Interleaved Dyck Reachability" by Giovanna Kobus Conrado and Andreas Pavlogiannis.
 
 
-The algorithm is a modified version of a code created and written by Andreas Pavlogiannis, Jaco van de Pol and dam Husted Kjelstrøm. The benchmarks and parts of the code are from the implementation of "Mutual Refinements of Context-Free Language Reachability" by Shuo Ding and Qirun Zhang.
+The algorithm is a modified version of a code created and written by Andreas Pavlogiannis, Jaco van de Pol and Adam Husted Kjelstrøm. The benchmarks and parts of the code are from the implementation of "Mutual Refinements of Context-Free Language Reachability" by Shuo Ding and Qirun Zhang.
 
 **Quick start:** To run the code, go to ```src/main/``` and run 
 
