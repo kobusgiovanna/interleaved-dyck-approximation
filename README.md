@@ -7,11 +7,17 @@ This repository contains an implementation of the algorithms described in "A Bet
 
 The algorithm is a modified version of a code created and written by Andreas Pavlogiannis, Jaco van de Pol and Adam Husted Kjelstrøm. The benchmarks and parts of the code are from the implementation of "Mutual Refinements of Context-Free Language Reachability" by Shuo Ding and Qirun Zhang.
 
-**Quick start:** To run the code, go to ```src/main/``` and run 
+**Quick start:** 
+
+Make sure you have Go and Python 3 installed.
+
+To run the code, go to ```src/main/``` and run 
 
 ```python3 run.py``` 
 
-in the terminal. Make sure you have Go and Python 3 installed.
+in the terminal.
+
+Output for each benchmark will be located in the  ```src/main/taint-out/``` and ```src/main/valueflow-out/``` folders.
 
 
 ## Structure

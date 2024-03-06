@@ -3,7 +3,7 @@ package main
 import (
 	"strconv"
 	"strings"
-	"slices"
+	"sort"
 )
 
 func mk_rule(params ...string) string {
@@ -121,7 +121,7 @@ func dyck_alpha_grammar_k_parity_se(labelsP []int, labelsB []int, k int) (MCFG, 
 	var d = ""
 	var res = &d
 
-	slices.Sort(labelsB)
+	sort.Ints(labelsB)
 
 	labelGroup := make(map[int]int)
 
@@ -206,7 +206,7 @@ func dyck_beta_grammar_k_parity_se(labelsP []int, labelsB []int, k int) (MCFG, e
 	var d = ""
 	var res = &d
 
-	slices.Sort(labelsP)
+	sort.Ints(labelsP)
 
 	labelGroup := make(map[int]int)
 

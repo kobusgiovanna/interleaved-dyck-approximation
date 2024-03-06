@@ -1,5 +1,5 @@
 import subprocess
-import os
+import os, shutil
 import os.path
 from typing import Union
 
@@ -22,7 +22,10 @@ def run_all(path: str) -> None:
             except subprocess.TimeoutExpired:
                 print('TIMEOUT')
 
-
+if os.path.isdir('taint-out'):
+    shutil.rmtree('taint-out')
+if os.path.isdir('valueflow-out'):
+    shutil.rmtree('valueflow-out')
 os.mkdir('taint-out') 
 os.mkdir('valueflow-out') 
 run_all('taint')
