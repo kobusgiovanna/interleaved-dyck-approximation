@@ -47,7 +47,7 @@ func main() {
 
 		//regularization, for valueflow bracket condition is included in automaton
 		regularizationPaths := getAutomatonReachability(g)
-		outputFileName := directoryOutput + "/" + fileInfo.Name()
+		outputFileName := directoryOutput + "/" + fileInfo.Name()[:len(fileInfo.Name())-4] + ".out"
 		outputFile, _ := os.Create(outputFileName)
 		defer outputFile.Close()
 		outputWord := "Regularization: " + strconv.Itoa(len(regularizationPaths))

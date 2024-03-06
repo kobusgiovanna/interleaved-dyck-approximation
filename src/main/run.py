@@ -23,5 +23,7 @@ def run_all(path: str) -> None:
                 print('TIMEOUT')
 
 
+os.mkdir('taint-out') 
+os.mkdir('valueflow-out') 
 run_all('taint')
 run_all('valueflow')
