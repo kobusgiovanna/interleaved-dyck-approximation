@@ -28,4 +28,4 @@ All code is stored in the ```src/main/``` folder.
 
 ```main.go``` contains the main function that runs the algorithms described.
 
-The remaining files are auxiliary files defining data structures and tests.
+The remaining files are auxiliary files defining data structures.
