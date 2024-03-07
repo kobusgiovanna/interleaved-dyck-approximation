@@ -18,7 +18,7 @@ def run_all(path: str) -> None:
         for filename in filenames:
             print("Running", filename)
             try:
-                output = execute(['go','run', '.', dirpath + '/' + filename],60)
+                output = execute(['go','run', '.', dirpath + '/' + filename],600)
             except subprocess.TimeoutExpired:
                 print('TIMEOUT')
 

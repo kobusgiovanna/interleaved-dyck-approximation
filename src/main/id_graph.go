@@ -370,16 +370,16 @@ func (g *graph) graphReaches(u Vertex, v Vertex, component *map[Vertex]int, reac
 	return (*reaches)[[2]int{(*component)[u],(*component)[v]}]
 }
 
-func (g *graph) removeNotPathPath(overApprox []path) (*graph){
+func (g *graph) removeNotPath(overApprox []path) (*graph){
 	pathMatrix := [][]Vertex{}
 	for _, path := range overApprox {
 		pathMatrix = append(pathMatrix, []Vertex{path.start,path.end})
 	}
-	return g.removeNotPath(&pathMatrix)
+	return g.removeNotPathMatrix(&pathMatrix)
 }
 
 
-func (g *graph) removeNotPath(overApprox *[][]Vertex) (*graph){
+func (g *graph) removeNotPathMatrix(overApprox *[][]Vertex) (*graph){
 	if len(*overApprox) == len(g.vertices)*len(g.vertices) {
 		return g
 	}

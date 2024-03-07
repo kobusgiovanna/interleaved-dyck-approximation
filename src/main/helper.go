@@ -12,7 +12,7 @@ import (
 
 func getAlphaGrammar(labelsP []int, labelsB []int) MCFG {
 	if curr_grammar == "augmented" {
-		alphaGrammar, _ := dyck_alpha_grammar_k_parity_se(labelsP, labelsB, 2)
+		alphaGrammar, _ := dyck_alpha_grammar_k_parity_se(labelsP, labelsB, curr_parity_k)
 		return alphaGrammar
 	}
 	alphaGrammar, _ := dyck_alpha_grammar(labelsP, labelsB)
@@ -21,7 +21,7 @@ func getAlphaGrammar(labelsP []int, labelsB []int) MCFG {
 
 func getBetaGrammar(labelsP []int, labelsB []int) MCFG {
 	if curr_grammar == "augmented" {
-		betaGrammar, _ := dyck_beta_grammar_k_parity_se(labelsP, labelsB, 2)
+		betaGrammar, _ := dyck_beta_grammar_k_parity_se(labelsP, labelsB, curr_parity_k)
 		return betaGrammar
 	}
 	betaGrammar, _ := dyck_beta_grammar(labelsP, labelsB)

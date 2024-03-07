@@ -12,6 +12,7 @@ var directoryInput = "taint"
 var directoryOutput = "taint-out"
 
 var curr_grammar = "classic"
+var curr_parity_k = 2
 
 func main() {
 
@@ -60,7 +61,7 @@ func main() {
 
 		//remove useless edges (not in path among reachable pair)
 		//from now on these edges cannot influence the answer
-		g = g.removeNotPathPath(intersectionPaths)
+		g = g.removeNotPath(intersectionPaths)
 		_, _, g = parseDyckComponent(g)
 
 
@@ -76,7 +77,7 @@ func main() {
 		outputFile.Write([]byte(outputWord + "\n"))
 
 		//reduce graph further
-		g = g.removeNotPathPath(classicMRPaths)
+		g = g.removeNotPath(classicMRPaths)
 		_, _, g = parseDyckComponent(g)
 
 		clearMaps()
@@ -86,10 +87,20 @@ func main() {
 		outputFile.Write([]byte(outputWord + "\n"))
 
 		//reduce graph further
-		g = g.removeNotPathPath(augmentedMRPaths)
+		g = g.removeNotPath(augmentedMRPaths)
 		_, _, g = parseDyckComponent(g)
 
-		filteredOverPaths := getOnDemandMR(g, reachablePaths, augmentedMRPaths, fileInfo.Name())
+
+		clearMaps()
+		curr_grammar = "classic"
+		filteredClassicPaths := getOnDemandMR(g, reachablePaths, augmentedMRPaths)
+		g = g.removeNotPath(filteredClassicPaths)
+		_, _, g = parseDyckComponent(g)
+
+
+		clearMaps()
+		curr_grammar = "augmented"
+		filteredOverPaths := getOnDemandMR(g, reachablePaths, filteredClassicPaths)
 
 		outputWord = "On-Demand: " + strconv.Itoa(len(filteredOverPaths))
 		outputFile.Write([]byte(outputWord + "\n"))
@@ -136,7 +147,7 @@ func getIntersectionReachability(g *graph) []path {
 		alphaPaths = append(alphaPaths,alphaPathsComp...)
 		
 		//reduce the graph with information from alpha paths
-		comp = comp.removeNotPathPath(alphaPathsComp)
+		comp = comp.removeNotPath(alphaPathsComp)
 		parList, braList, comp = parseDyckComponentNaive(comp)
 
 		//find paths that respect betaGrammar
@@ -147,7 +158,7 @@ func getIntersectionReachability(g *graph) []path {
 		}
 
 		if directoryInput == "valueflow" {
-			comp = comp.removeNotPathPath(betaPathsComp)
+			comp = comp.removeNotPath(betaPathsComp)
 			parList, braList, comp = parseDyckComponentNaive(comp)
 
 			bracketPathsComp := g.filterBracketPaths(betaPathsComp)
@@ -261,7 +272,7 @@ func getMROverApprox(g *graph, underApprox []path) []path {
 //store the answer
 //afterwards run again
 
-func getOnDemandMR(g *graph, underApprox []path, overApprox []path, fileName string) []path{
+func getOnDemandMR(g *graph, underApprox []path, overApprox []path) []path{
 
 	condensedGraph, parent := condensateFromUnderApprox(g, underApprox)
 
@@ -296,7 +307,6 @@ func getOnDemandMR(g *graph, underApprox []path, overApprox []path, fileName str
 	memory := make(map[path]bool)
 
 	filteredOverPaths := underApprox
-
 	//add the good paths
 	for i, currPath := range unknownPaths {
 		if i%100 == 0 {
@@ -337,7 +347,7 @@ func mutualRefinement(g *graph, onePath bool, myPath path) []path {
 			if !comp.vertices[myPath.start] || !comp.vertices[myPath.end] {
 				continue
 			}
-			comp = comp.removeNotPathPath([]path{myPath})
+			comp = comp.removeNotPath([]path{myPath})
 		}
 		//if onepath then component must contain mypath
 		parList, braList, parsedComp := parseDyckComponent(comp)
@@ -388,14 +398,14 @@ func mutualRefinement(g *graph, onePath bool, myPath path) []path {
 
 		if currEdgeNum == 0 || oldEdgeNum == currEdgeNum {
 			//it has converged
+			if onePath && len(alphaPaths)>0 && len(betaPaths)>0 {
+				return alphaPaths
+			}
 			betaPathMap := make(map[path]bool)
 			for _, betaPath := range betaPaths {
 				betaPathMap[betaPath] = true
 			}
 			for _, alphaPath := range alphaPaths {
-				if onePath && alphaPath != myPath {
-					continue
-				}
 				if alphaPath.start != alphaPath.end && betaPathMap[alphaPath] {
 					paths = append(paths, alphaPath)
 				}
